@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PROJETO_FUP_Brasil.Migrations
 {
-    public partial class NovaMigration : Migration
+    public partial class inivialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -148,8 +148,7 @@ namespace PROJETO_FUP_Brasil.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Aluno_CursosID",
                 table: "Aluno",
-                column: "CursosID",
-                unique: true);
+                column: "CursosID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Email_AlunoId",

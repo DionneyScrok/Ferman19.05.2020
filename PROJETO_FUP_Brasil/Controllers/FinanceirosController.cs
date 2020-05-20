@@ -49,10 +49,10 @@ namespace PROJETO_FUP_Brasil.Controllers
                 var fonteDescricao = new PdfSharpCore.Drawing.XFont("Ariel", 8, PdfSharpCore.Drawing.XFontStyle.BoldItalic);
                 var tituloDetalhes = new PdfSharpCore.Drawing.XFont("Ariel", 8, PdfSharpCore.Drawing.XFontStyle.Bold);
                 var fonteDetalhesDescricao = new PdfSharpCore.Drawing.XFont("Ariel", 7);
-                var logo = @"C:\Users\dionn\Desktop\Ferman11.05.2020\PROJETO_FUP_Brasil\wwwroot\img\logo.jpg";
                 var qtdPaginas = doc.PageCount;
 
                 //imagem logotipo
+                var logo = @"C:\Users\dionn\Desktop\Ferman19.05.2020\PROJETO_FUP_Brasil\wwwroot\img\logo.jpg";
                 textFormatter.DrawString(qtdPaginas.ToString(), new PdfSharpCore.Drawing.XFont("Arial", 10), corFonte, new PdfSharpCore.Drawing.XRect(575, 825, page.Width, page.Height));
                 XImage imagem = XImage.FromFile(logo);
                 graphics.DrawImage(imagem, 20, 5, 100, 50);
@@ -67,8 +67,10 @@ namespace PROJETO_FUP_Brasil.Controllers
                 var alturaTituloFinanceiroY = 140;
                 var detalhes = new PdfSharpCore.Drawing.Layout.XTextFormatter(graphics);
 
-                detalhes.DrawString("Saida", fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(20, alturaTituloFinanceiroY, page.Width, page.Height));
-                detalhes.DrawString("Entrada", fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(220, alturaTituloFinanceiroY, page.Width, page.Height));
+                detalhes.DrawString("Saida", fonteDescricao, PdfSharpCore.Drawing.XBrushes.Red, new PdfSharpCore.Drawing.XRect(20, alturaTituloFinanceiroY, page.Width, page.Height));
+                detalhes.DrawString("Entrada", fonteDescricao, PdfSharpCore.Drawing.XBrushes.Green, new PdfSharpCore.Drawing.XRect(220, alturaTituloFinanceiroY, page.Width, page.Height));
+                detalhes.DrawString("Total Liquido", fonteDescricao, PdfSharpCore.Drawing.XBrushes.DodgerBlue, new PdfSharpCore.Drawing.XRect(340, alturaTituloFinanceiroY, page.Width, page.Height));
+
 
                 //gerar dados do relátorio
 
@@ -79,19 +81,29 @@ namespace PROJETO_FUP_Brasil.Controllers
                 var conteudoFuncionario = await _context.Funcionario.ToListAsync();
                 model.Funcionarios = conteudoFuncionario;
                 model.Alunos = conteudoAluno;
+                decimal somaDespesas = 0;
+                decimal somaLucros = 0;
+                decimal totalLiquido = 0;
      
 
                 foreach (var item in model.Funcionarios)
                 {                   
                     textFormatter.DrawString("Saida: " + item.SalarioFuncionario , fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(20, alturaItens, page.Width, page.Height));
+                    somaDespesas +=item.SalarioFuncionario;
                     alturaItens += 20;
                 }
-                
+              
+
                 foreach (var item in model.Alunos)
                 {
                     textFormatter.DrawString("Entrada: " + item.Cursos.ValorCurso, fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(220, alturaItens2, page.Width, page.Height));
+                    somaLucros += item.Cursos.ValorCurso;
                     alturaItens2 += 20;
                 }
+                totalLiquido = somaLucros - somaDespesas;
+                textFormatter.DrawString("Total Saida: " + somaDespesas, fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(20, alturaItens, page.Width, page.Height));
+                textFormatter.DrawString("Total Entrada: " + somaLucros, fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(220, alturaItens2, page.Width, page.Height));
+                textFormatter.DrawString("Total Liquido: " + totalLiquido, fonteDescricao, corFonte, new PdfSharpCore.Drawing.XRect(340, alturaItens2, page.Width, page.Height));
 
 
 

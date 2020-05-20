@@ -10,8 +10,8 @@ using PROJETO_FUP_Brasil.Data;
 namespace PROJETO_FUP_Brasil.Migrations
 {
     [DbContext(typeof(PROJETO_FUP_BrasilContext))]
-    [Migration("20200518193309_NovaMigration")]
-    partial class NovaMigration
+    [Migration("20200520013446_inivialMigration")]
+    partial class inivialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,8 +174,7 @@ namespace PROJETO_FUP_Brasil.Migrations
 
                     b.HasKey("Id_Matricula");
 
-                    b.HasIndex("CursosID")
-                        .IsUnique();
+                    b.HasIndex("CursosID");
 
                     b.ToTable("Aluno");
                 });
@@ -241,8 +240,8 @@ namespace PROJETO_FUP_Brasil.Migrations
             modelBuilder.Entity("Remake_FUP.Models.Aluno", b =>
                 {
                     b.HasOne("PROJETO_FUP_Brasil.Models.Cursos", "Cursos")
-                        .WithOne("Aluno")
-                        .HasForeignKey("Remake_FUP.Models.Aluno", "CursosID")
+                        .WithMany("Aluno")
+                        .HasForeignKey("CursosID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

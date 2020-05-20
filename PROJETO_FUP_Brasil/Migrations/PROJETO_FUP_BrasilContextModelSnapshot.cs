@@ -172,8 +172,7 @@ namespace PROJETO_FUP_Brasil.Migrations
 
                     b.HasKey("Id_Matricula");
 
-                    b.HasIndex("CursosID")
-                        .IsUnique();
+                    b.HasIndex("CursosID");
 
                     b.ToTable("Aluno");
                 });
@@ -239,8 +238,8 @@ namespace PROJETO_FUP_Brasil.Migrations
             modelBuilder.Entity("Remake_FUP.Models.Aluno", b =>
                 {
                     b.HasOne("PROJETO_FUP_Brasil.Models.Cursos", "Cursos")
-                        .WithOne("Aluno")
-                        .HasForeignKey("Remake_FUP.Models.Aluno", "CursosID")
+                        .WithMany("Aluno")
+                        .HasForeignKey("CursosID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

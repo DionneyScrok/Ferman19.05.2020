@@ -30,8 +30,7 @@ namespace Remake_FUP.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         [RegularExpression(@"^[a-zA-Z ]*$", ErrorMessage = "Nome inválido")]
         [StringLength(9, MinimumLength = 8, ErrorMessage = "Tamanho inválido")]
-        public string Genero { get; set; }
-     
+        public string Genero { get; set; }    
         public decimal Mensalidade { get; set; }
         //
 
